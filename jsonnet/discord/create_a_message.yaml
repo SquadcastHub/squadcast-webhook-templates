@@ -13,4 +13,5 @@ template-code: |
       "title": incident_state,
       "description": event_data.data.resource_data.description,
     }]
+    
   }
