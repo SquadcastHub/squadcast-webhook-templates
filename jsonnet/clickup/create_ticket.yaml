@@ -1,0 +1,22 @@
+name: Create a ClickUp Ticket
+slug: create-a-clickup-ticket
+language: jsonnet
+template-code: |
+  {
+    "name": root.data.resource_data.message,
+    "description": root.data.resource_data.description +"\n"+ "Incident Link : " + root.data.resource_data.url,
+    "assignees": [
+    ],
+    "tags": [],
+    "status": "",
+    "priority": 2,
+    "due_date": 0,
+    "due_date_time": false,
+    "time_estimate": 0,
+    "start_date": 0,
+    "start_date_time": false,
+    "notify_all": true,
+    "parent": null,
+    "links_to": null,
+    "check_required_custom_fields": false
+  }

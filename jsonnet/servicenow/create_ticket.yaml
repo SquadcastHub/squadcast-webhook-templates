@@ -1,0 +1,13 @@
+name: ServiceNow - Create Ticket
+slug: servicenow-create-ticket
+language: jsonnet
+template-code: |
+  {
+    "urgency": 2,
+    "impact": 2,
+    "short_description": "**"+root.data.resource_data.message+"**" 
+                    + "\n\n"+"**Incident Description :-** \n" 
+                    + root.data.resource_data.description
+                    + "\n\n"+"**Incident URL : **"
+                    + root.data.resource_data.url
+  }
