@@ -1,0 +1,16 @@
+name: Create a discord message
+slug: create-a-discord-message
+language: jsonnet
+template-code: |
+  {
+    local incident_state = if event_data.event.type == "incident.triggered" then "Incident Triggered"
+    else if event_data.event.type == "incident.acknowledged" then "Incident Acknowledged"
+    else if event_data.event.type == "incident.resolved" then "Incident Resolved",
+    "username": "Squadcast",
+    "avatar_url": "https://uploads-ssl.webflow.com/5c51758c58939b30a6fd3d73/61c46dede24a2083002b1093_Squadcast_symbol.png",
+    "content": event_data.data.resource_data.message,
+    "embeds": [{
+      "title": incident_state,
+      "description": event_data.data.resource_data.description,
+    }]
+  }
