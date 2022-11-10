@@ -1,5 +1,5 @@
-name: Create a ClickUp Ticket
-slug: create-a-clickup-ticket
+name: ClickUp - Create Ticket
+slug: clickup-create-ticket
 language: jsonnet
 template-code: |
   {
