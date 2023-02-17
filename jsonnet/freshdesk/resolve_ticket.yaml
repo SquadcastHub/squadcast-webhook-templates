@@ -1,0 +1,11 @@
+name: Freshdesk - Resolve Ticket
+slug: freshdesk-resolve-ticket
+language: jsonnet
+template-code: |
+  {
+    "bulk_action":
+    {
+      "ids":[root.data.resource_data.event_payload.freshdesk_webhook.ticket_id],
+      "properties":{"status":5}
+    }
+  }
