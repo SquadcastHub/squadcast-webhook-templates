@@ -1,27 +1,44 @@
 name: Discord - Send Message
 slug: discord-send-message
 language: jsonnet
-template-code: |
+template-code: |  
+  local data = root.data.resource_data;
+  local type = root.event.type;
+  local source = data.alert_source.short_name;
+
+  local colors = {
+    "incident.triggered":    "10027238",
+    "incident.acknowledged": "14804480",
+    "incident.reassigned":   "10027238",
+    "incident.resolved":     "2219410",
+  };
+  local color = colors[type];
+
+  local descriptions = {
+    "incident.triggered":    data.description,
+    "incident.acknowledged": "",
+    "incident.reassigned":   "",
+    "incident.resolved":     "",
+  };
+  local description = descriptions[type];
+
   {
-    local url = root.data.resource_data.url,
+    "username": data.assigned_to.name,
 
-    local title = if root.event.type == "incident.triggered" then "**Triggered **"+"[**#"+root.data.resource_data.id+"**]("+url+")\n"
-    else if root.event.type == "incident.acknowledged" then "**Acknowledged **"+"[**#"+root.data.resource_data.id+"**]("+url+")\n"
-    else if root.event.type == "incident.resolved" then  "**Resolved **"+"[**#"+root.data.resource_data.id+"**]("+url+")\n"
-    else if root.event.type == "incident.reassigned" then  "**Reassigned **"+"[**#"+root.data.resource_data.id+"**]("+url+")\n",
+    "embeds": [
+      {
+        "title": data.message,
+        "description": description,
+        "color": color,
 
-    local color = if root.event.type == "incident.triggered" then "10027238"
-    else if root.event.type == "incident.acknowledged" then "14804480"
-    else if root.event.type == "incident.resolved" then  "2219410"
-    else if root.event.type == "incident.reassigned" then  "10027238",
+        "fields": [
+          {"inline": true, "name": "Status", "value": data.status},
+          {"inline": true, "name": "Affects", "value": data.service.name},
+          {"inline": true, "name": "Started", "value": data.created_at},
 
-    "embeds": [{
-          "color" : color,
-          "description": (title+root.data.resource_data.message).replace(/\n+/g, "\n")
-          +"\n\n**Incident State** : " + root.data.resource_data.status + "\n" 
-          + "**Service Name** : " + root.data.resource_data.service.name + "\n"
-          + "**Alert Source** : " + root.data.resource_data.alert_source.type + "\n\n"
-          + "**Description** : " + root.data.resource_data.description + "\n"
-        }]
+          {"inline": true, "name": "Source", "value": source},
+          {"inline": false, "name": "URL", "value": data.url},
+        ]
+      }
+    ]
   }
-
