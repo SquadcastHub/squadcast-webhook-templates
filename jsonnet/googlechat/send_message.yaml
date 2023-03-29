@@ -1,0 +1,19 @@
+name: Google Chat - Send message
+slug: googlechat-send-message
+language: jsonnet
+template-code: |
+  {
+    local title = if root.event.type == "incident.triggered" then "<" + root.data.resource_data.url + "|*Triggered #" + root.data.resource_data.id + "*>\n"
+    else if root.event.type == "incident.acknowledged" then "<" + root.data.resource_data.url + "|*Acknowledged #" + root.data.resource_data.id + "*>\n"
+    else if root.event.type == "incident.resolved" then  "<" + root.data.resource_data.url + "|*Resolved #" + root.data.resource_data.id + "*>\n"
+    else if root.event.type == "incident.reassigned" then  "<" + root.data.resource_data.url + "|*Reassigned #" + root.data.resource_data.id + "*>\n",
+
+    "text": "\n-------------------------------------\n" 
+                + title
+                + "*" + root.data.resource_data.message + "*"
+                + "\n\n" + "*Incident State* : " + root.data.resource_data.status + "\n" 
+                + "*Service Name* : " + root.data.resource_data.service.name + "\n"
+                + "*Alert Source* : " + root.data.resource_data.alert_source.type + "\n\n"
+                + "*Description* : \n\n" + root.data.resource_data.description + "\n" 
+                + "\n-------------------------------------\n"
+  }
