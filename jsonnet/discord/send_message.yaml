@@ -3,25 +3,27 @@ slug: discord-send-message
 language: jsonnet
 template-code: |
   {
-    local url = root.data.resource_data.url,
+  local remove_empty(x) = x != "",
+  local remove_redundant_newlines(y) = std.join("\n", std.filter(remove_empty, std.split(y, "\n"))),
+  local url = root.data.resource_data.url,
 
-    local title = if root.event.type == "incident.triggered" then "**Triggered **"+"[**#"+root.data.resource_data.id+"**]("+url+")\n"
-    else if root.event.type == "incident.acknowledged" then "**Acknowledged **"+"[**#"+root.data.resource_data.id+"**]("+url+")\n"
-    else if root.event.type == "incident.resolved" then  "**Resolved **"+"[**#"+root.data.resource_data.id+"**]("+url+")\n"
-    else if root.event.type == "incident.reassigned" then  "**Reassigned **"+"[**#"+root.data.resource_data.id+"**]("+url+")\n",
+  local title = if root.event.type == "incident.triggered" then "**Triggered **"+"[**#"+root.data.resource_data.id+"**]("+url+")\n"
+  else if root.event.type == "incident.acknowledged" then "**Acknowledged **"+"[**#"+root.data.resource_data.id+"**]("+url+")\n"
+  else if root.event.type == "incident.resolved" then  "**Resolved **"+"[**#"+root.data.resource_data.id+"**]("+url+")\n"
+  else if root.event.type == "incident.reassigned" then  "**Reassigned **"+"[**#"+root.data.resource_data.id+"**]("+url+")\n",
 
-    local color = if root.event.type == "incident.triggered" then "10027238"
-    else if root.event.type == "incident.acknowledged" then "14804480"
-    else if root.event.type == "incident.resolved" then  "2219410"
-    else if root.event.type == "incident.reassigned" then  "10027238",
+  local color = if root.event.type == "incident.triggered" then "10027238"
+  else if root.event.type == "incident.acknowledged" then "14804480"
+  else if root.event.type == "incident.resolved" then  "2219410"
+  else if root.event.type == "incident.reassigned" then  "10027238",
 
-    "embeds": [{
-          "color" : color,
-          "description": (title+root.data.resource_data.message).replace(/\n+/g, "\n")
-          +"\n\n**Incident State** : " + root.data.resource_data.status + "\n" 
-          + "**Service Name** : " + root.data.resource_data.service.name + "\n"
-          + "**Alert Source** : " + root.data.resource_data.alert_source.type + "\n\n"
-          + "**Description** : " + root.data.resource_data.description + "\n"
-        }]
+  "embeds": [{
+        "color" : color,
+        "description": remove_redundant_newlines(title+root.data.resource_data.message)
+        +"\n\n**Incident State** : " + root.data.resource_data.status + "\n" 
+        + "**Service Name** : " + root.data.resource_data.service.name + "\n"
+        + "**Alert Source** : " + root.data.resource_data.alert_source.type + "\n\n"
+        + "**Description** : " + root.data.resource_data.description + "\n"
+      }]
   }
 
