@@ -1,0 +1,16 @@
+name: Zendesk - Create Ticket
+slug: zendesk-create-channel
+language: jsonnet
+template-code: |
+  {
+      "ticket": {
+          "subject": root.data.resource_data.message,
+          "comment": {
+              "body": root.data.resource_data.description 
+      + "\n -------------------------" 
+      + "\n Incident URL : " + root.data.resource_data.url 
+      + "\n Service : " + root.data.resource_data.service.name 
+      + "\nAlert Source : " + root.data.resource_data.alert_source.type
+          }
+      }
+  }

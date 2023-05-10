@@ -1,0 +1,7 @@
+name: Slack - Create Channel
+slug: slack-create-channel
+language: jsonnet
+template-code: |
+  {
+    "name": root.data.resource_data.id
+  }
