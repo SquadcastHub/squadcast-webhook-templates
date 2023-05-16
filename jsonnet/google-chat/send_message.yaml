@@ -1,0 +1,106 @@
+name: Google Chat - Send message
+slug: googlechat-send-message
+language: jsonnet
+template-code: |
+  { 
+   local heading = if root.event.type == "incident.triggered" then "Incident Triggered"
+   else if root.event.type == "incident.acknowledged" then "Incident Acknowledged"
+   else if root.event.type == "incident.resolved" then  "Incident Resolved"
+   else if root.event.type == "incident.reassigned" then  "Incident Reassigned",
+   "cardsV2": [
+    {
+      "cardId": "unique-card-id",
+      "card": {
+        "header": {
+          "title": heading,
+          "imageUrl": "https://avatars.githubusercontent.com/u/61961575?s=200&v=4",
+          "imageType": "CIRCLE",
+          "imageAltText": "SQ icon"
+        },
+        "sections": [
+          {
+            "header": "INCIDENT ID",
+            "collapsible": false,
+            "widgets": [
+              {
+                "decoratedText": {
+                  "text": root.data.resource_data.id
+                }
+              },
+              {
+                "buttonList": {
+                  "buttons": [
+                    {
+                      "text": "View on Squadcast",
+                      "onClick": {
+                        "openLink": {
+                          "url": root.data.resource_data.url
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "header": "MESSAGE",
+            "collapsible": false,
+            "widgets": [
+              {
+                "decoratedText": {
+                  "text": root.data.resource_data.message
+                }
+              }
+            ]
+          },
+          {
+            "header": "SERVICE",
+            "collapsible": false,
+            "widgets": [
+              {
+                "decoratedText": {
+                  "text": root.data.resource_data.service.name
+                }
+              }
+            ]
+          },
+          {
+            "header": "Triggered VIA",
+            "collapsible": false,
+            "widgets": [
+              {
+                "decoratedText": {
+                  "text": root.data.resource_data.alert_source.type
+                }
+              }
+            ]
+          },
+          {
+            "header": "Assigned To",
+            "collapsible": false,
+            "widgets": [
+              {
+                "decoratedText": {
+                  "text": root.data.resource_data.assigned_to.name
+                }
+              }
+            ]
+          },
+          {
+            "header": "DESCRIPTION",
+            "collapsible": true,
+            "uncollapsibleWidgetsCount": 0,
+            "widgets": [
+              {
+                "decoratedText": {
+                  "text": root.data.resource_data.description
+                }
+              }
+            ]
+           }
+         ]
+       }
+     }
+   ]
+  }
