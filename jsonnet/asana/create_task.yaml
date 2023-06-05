@@ -1,0 +1,16 @@
+name: Asana - Create Task
+slug: asana-create-task
+language: jsonnet
+template-code: |
+  {
+    "data": {
+    "name": root.data.resource_data.message,
+    "notes":root.data.resource_data.description
+    + "\n----------------------------------"
+    + "\n Source: Squadcast"
+    + "\n Incident URL : " + root.data.resource_data.url 
+    + "\n Service : " + root.data.resource_data.service.name 
+    + "\n Alert Source : " + root.data.resource_data.alert_source.type,
+    "workspace": "1204741600302560",
+    "projects": "1204741674663837"
+  }
