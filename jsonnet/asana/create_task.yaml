@@ -11,6 +11,6 @@ template-code: |
     + "\n Incident URL : " + root.data.resource_data.url 
     + "\n Service : " + root.data.resource_data.service.name 
     + "\n Alert Source : " + root.data.resource_data.alert_source.type,
-    "workspace": "1204741600302560",
-    "projects": "1204741674663837"
+    "workspace": "<Enter your Workspace ID>",
+    "projects": "<Enter your Project(s) ID>"
   }
