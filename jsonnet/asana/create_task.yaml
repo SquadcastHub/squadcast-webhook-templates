@@ -13,4 +13,5 @@ template-code: |
     + "\n Alert Source : " + root.data.resource_data.alert_source.type,
     "workspace": "1204741600302560",
     "projects": "1204741674663837"
+    }
   }
