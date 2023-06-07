@@ -1,0 +1,14 @@
+name: ClickUp - Create Task
+slug: clickup-create-task
+language: jsonnet
+template-code: |
+  {
+    "name": root.data.resource_data.message,
+    "description": root.data.resource_data.description
+    + "\n -------------------------" 
+    + "\n Source : Squadcast"
+    + "\n Incident URL : " + root.data.resource_data.url 
+    + "\n Service : " + root.data.resource_data.service.name 
+    + "\nAlert Source : " + root.data.resource_data.alert_source.type,
+    "status": "to do"
+  }
