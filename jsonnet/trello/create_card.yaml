@@ -1,0 +1,17 @@
+name: Trello - Create Card
+slug: trello-create-card
+language: jsonnet
+template-code: |
+  {
+    "name": root.data.resource_data.message,
+    "desc": root.data.resource_data.description 
+    + "\n -------------------------" 
+    + "\n Incident URL : " + root.data.resource_data.url 
+    + "\n Service : " + root.data.resource_data.service.name 
+    + "\n Alert Source : " + root.data.resource_data.alert_source.type,
+    "urlSource": root.data.resource_data.url,
+    "fileSource": "Squadcast",
+    "idList":"<Enter Your LIST ID>",
+    "key":"<Enter Your API Key>",
+    "token":"<Enter Your Token>"
+  }
