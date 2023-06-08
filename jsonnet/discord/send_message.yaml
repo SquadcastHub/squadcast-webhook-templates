@@ -1,35 +1,29 @@
-local data = root.data.resource_data;
-  local type = root.event.type;
-  local source = data.alert_source.type;
-  local colors = {
-    "incident.triggered":    "10027238",
-    "incident.acknowledged": "14804480",
-    "incident.reassigned":   "10027238",
-    "incident.resolved":     "2219410",
-  };
-  local color = colors[type];
-  local descriptions = {
-    "incident.triggered":    data.description,
-    "incident.acknowledged": "",
-    "incident.reassigned":   "",
-    "incident.resolved":     "",
-  };
-  local description = descriptions[type];
-  local showDescriptionField = if std.length(description) > 0 then "Description" else "";
+name: Discord - Send Message
+slug: discord-send-message
+language: jsonnet
+template-code: |
   {
-    "username": data.assigned_to.name,
-    "embeds": [
-      {
-        "title": data.message,
-        "color": color,
-        "fields": [
-          {"inline": true, "name": "Status", "value": data.status},
-          {"inline": true, "name": "Service", "value": data.service.name},
-          {"inline": true, "name": "Started", "value": data.created_at},
-          {"inline": true, "name": "Via", "value": source},
-          {"inline": false, "name": "URL", "value": data.url},
-          {"inline": false, "name": showDescriptionField, "value": description}
-        ]
-      }
-    ]
+  local remove_empty(x) = x != "",
+  local remove_redundant_newlines(y) = std.join("\n", std.filter(remove_empty, std.split(y, "\n"))),
+  local url = root.data.resource_data.url,
+
+  local title = if root.event.type == "incident.triggered" then "**Triggered **"+"[**#"+root.data.resource_data.id+"**]("+url+")\n"
+  else if root.event.type == "incident.acknowledged" then "**Acknowledged **"+"[**#"+root.data.resource_data.id+"**]("+url+")\n"
+  else if root.event.type == "incident.resolved" then  "**Resolved **"+"[**#"+root.data.resource_data.id+"**]("+url+")\n"
+  else if root.event.type == "incident.reassigned" then  "**Reassigned **"+"[**#"+root.data.resource_data.id+"**]("+url+")\n",
+
+  local color = if root.event.type == "incident.triggered" then "10027238"
+  else if root.event.type == "incident.acknowledged" then "14804480"
+  else if root.event.type == "incident.resolved" then  "2219410"
+  else if root.event.type == "incident.reassigned" then  "10027238",
+
+  "embeds": [{
+        "color" : color,
+        "description": remove_redundant_newlines(title+root.data.resource_data.message)
+        +"\n\n**Incident State** : " + root.data.resource_data.status + "\n" 
+        + "**Service Name** : " + root.data.resource_data.service.name + "\n"
+        + "**Alert Source** : " + root.data.resource_data.alert_source.type + "\n\n"
+        + "**Description** : " + root.data.resource_data.description + "\n"
+      }]
   }
+
