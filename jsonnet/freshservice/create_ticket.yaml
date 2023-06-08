@@ -1,0 +1,16 @@
+name: Freshservice - Create Ticket
+slug: freshservice-create-ticket
+language: jsonnet
+template-code: |
+  {
+    "subject": root.data.resource_data.message,
+    "description": root.data.resource_data.description 
+    + "<br/><br/>-------------------------" 
+    + "<br/>Incident URL : " + root.data.resource_data.url 
+    + "<br/>Service : " + root.data.resource_data.service.name 
+    + "<br/>Alert Source : " + root.data.resource_data.alert_source.type,
+    "priority": 1,
+    "status": 2,
+    "name": "Squadcast",
+    "phone": "99999"
+  }
