@@ -1,0 +1,12 @@
+name: ADO - Create WorkItem
+slug: ADO-Create-WorkItem
+language: jsonnet
+template-code: |
+  [
+  {
+    "op": "add",
+    "path": "/fields/System.Title",
+    "from": null,
+    "value": "Sample task created from Squadcast",
+  }
+  ]
