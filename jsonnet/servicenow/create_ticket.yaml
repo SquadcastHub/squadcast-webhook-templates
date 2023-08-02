@@ -7,6 +7,5 @@ template-code: |
   "description": "Incident Description :- \n" 
                   + root.data.resource_data.description
                   + "\n\n"+"Incident URL : "
-                  + root.data.resource_data.url,
-    "caller": "Squadcast"
+                  + root.data.resource_data.url
  }
