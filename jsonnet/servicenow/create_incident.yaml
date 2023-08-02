@@ -1,5 +1,5 @@
-name: ServiceNow - Create Ticket
-slug: servicenow-create-ticket
+name: ServiceNow - Create Incident
+slug: servicenow-create-incident
 language: jsonnet
 template-code: |
  {
