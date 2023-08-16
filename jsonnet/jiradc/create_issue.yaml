@@ -1,0 +1,16 @@
+name: JIRA DC - Create Issue
+slug: jira-create-issue
+language: jsonnet
+template-code: |
+{
+"fields": {
+"project": {
+"key": "<Project Name>"
+},
+"summary": root.data.resource_data.message,
+"description": root.data.resource_data.description +"\n"+ "Incident Link : " + root.data.resource_data.url,
+"issuetype": {
+"name": "<Issue Type>"
+}
+}
+}
