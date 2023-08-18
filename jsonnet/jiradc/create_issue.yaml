@@ -7,8 +7,8 @@ template-code: |
         "project": {
             "key": "<Project Name>"
         },
-        "summary": "root.data.resource_data.message",
-        "description": "root.data.resource_data.description" + "\n" + "Incident Link : " + "root.data.resource_data.url",
+        "summary": root.data.resource_data.message,
+        "description": root.data.resource_data.description + "\n" + "Incident Link : " + root.data.resource_data.url,
         "issuetype": {
             "name": "<Issue>"
         }
