@@ -2,7 +2,7 @@ name: JIRA DC - Create Issue
 slug: jira-create-issue
 language: jsonnet
 template-code: |
-{
+ {
     "fields": {
         "project": {
             "key": "<Project Name>"
@@ -13,4 +13,4 @@ template-code: |
             "name": "<Issue>"
         }
     }
-}
+ }
