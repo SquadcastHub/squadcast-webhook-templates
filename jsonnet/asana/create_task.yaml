@@ -13,4 +13,5 @@ template-code: |
     + "\n Alert Source : " + root.data.resource_data.alert_source.type,
     "workspace": "<Enter your Workspace ID>",
     "projects": "<Enter your Project(s) ID>"
+    }
   }
