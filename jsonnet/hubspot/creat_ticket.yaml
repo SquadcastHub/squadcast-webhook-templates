@@ -1,0 +1,13 @@
+name: Hubspot - Create Ticket
+slug: hubspot-create-ticket
+language: jsonnet
+template-code: |
+  {
+  "properties": {
+    "hs_pipeline": "0",
+    "hs_pipeline_stage": "1",
+    "hs_ticket_priority": "HIGH",
+    "subject": root.data.resource_data.message,
+    "content": root.data.resource_data.description
+  }
+  }
