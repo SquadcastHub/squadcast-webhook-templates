@@ -1,0 +1,8 @@
+name: Solarwinds - Acknowledge Alert
+slug: solarwinds-acknowledge-alert
+language: jsonnet
+template-code: |
+  {
+    "alertobjectids":[root.data.resource_data.event_payload.alertobjectid],
+    "notes":{"Acknowledged in Squadcast"}
+  }
